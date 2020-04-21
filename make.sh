@@ -70,7 +70,7 @@ buildData(){
 	buildMCMeta
 	echo "Zipping up $target/$buildType"
 	cd data-bakery
-	zip -r ../../baked-packs/$target-$buildType.zip *
+	zip -rq ../../baked-packs/$target-$buildType.zip *
 	cd ..
 	
 	rm -rf data-bakery/*
@@ -81,7 +81,7 @@ buildData(){
 	buildMCMeta
 	echo "Zipping up $target/$buildType"
 	cd data-bakery
-	zip -r ../../baked-packs/$target-$buildType.zip *
+	zip -rq ../../baked-packs/$target-$buildType.zip *
 	cd ..
 }
         # Setup build env
