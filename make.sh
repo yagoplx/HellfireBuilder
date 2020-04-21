@@ -42,14 +42,14 @@ setup(){
       }
 
 buildMCMeta(){
-	if [ "buildType" == "datapack" ]; then
+	if [ "$buildType" == "datapack" ]; then
 		echo "{" > data-bakery/pack.mcmeta
   	 	echo "\"pack\": {" >> data-bakery/pack.mcmeta
     	  	echo "\"pack_format\": 5," >> data-bakery/pack.mcmeta
     	  	echo "\"description\": \"$target Mod Data Pack\"" >> data-bakery/pack.mcmeta
   	 	echo "  }" >> data-bakery/pack.mcmeta
 		echo "}" >> data-bakery/pack.mcmeta
-	elif [ "buildType" == "resourcepack" ]; then
+	elif [ "$buildType" == "resourcepack" ]; then
 		echo "{" > data-bakery/pack.mcmeta
   	 	echo "\"pack\": {" >> data-bakery/pack.mcmeta
     	  	echo "\"pack_format\": 5," >> data-bakery/pack.mcmeta
@@ -63,7 +63,7 @@ buildMCMeta(){
 buildData(){
 	echo "Running data generators..."
 	mkdir data-bakery 2>/dev/null
-	if [ "nogen" != "false" ]; then
+	if [ "$nogen" != "false" ]; then
 	./gradlew prepareRunData
 	./gradlew runData
 	fi
