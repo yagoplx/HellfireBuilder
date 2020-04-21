@@ -19,6 +19,10 @@ Run `./make.sh ol` to build ObserverLib.
 Run `./make.sh all` to build both.  
 Add the `--build-data` flag to your command to build recipes and block state data.
 
+**FAQ**  
+Q: Help, my recipes and textures are missing!  
+A: --build-data will generate the recipes and textures you need. You just need to put the files that appear in the baked-packs folder in your resourcepacks folder, for the resource pack, and the datapack in your world's datapacks folder.
+
 **Special Thanks/Credits**  
 https://github.com/HellFirePvP for making awesome mods.  
 https://github.com/gradle/gradle for baking delicious jars.  
