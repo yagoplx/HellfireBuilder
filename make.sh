@@ -41,14 +41,14 @@ setup(){
 
 buildMCMeta(){
 	if [ "buildType" == "datapack" ]; then
-		echo "{" > pack.mcmeta
+		echo "{" > data-bakery/pack.mcmeta
   	 	echo "\"pack\": {" >> data-bakery/pack.mcmeta
     	  	echo "\"pack_format\": 5," >> data-bakery/pack.mcmeta
     	  	echo "\"description\": \"$target Mod Data Pack\"" >> data-bakery/pack.mcmeta
   	 	echo "  }" >> data-bakery/pack.mcmeta
 		echo "}" >> data-bakery/pack.mcmeta
 	elif [ "buildType" == "resourcepack" ]; then
-		echo "{" > pack.mcmeta
+		echo "{" > data-bakery/pack.mcmeta
   	 	echo "\"pack\": {" >> data-bakery/pack.mcmeta
     	  	echo "\"pack_format\": 5," >> data-bakery/pack.mcmeta
     	  	echo "\"description\": \"$target Mod Resource Pack\"" >> data-bakery/pack.mcmeta
@@ -68,7 +68,9 @@ buildData(){
 	cp -r src/generated/resources/assets data-bakery/
 	buildMCMeta
 	echo "Zipping up $target/$buildType"
-	zip -r ../baked-packs/$target-$buildType.zip data-bakery/*
+	cd data-bakery
+	zip -r ../baked-packs/$target-$buildType.zip *
+	cd ..
 	
 	rm -rf data-bakery/*
 	
@@ -77,7 +79,9 @@ buildData(){
 	cp -r src/generated/resources/data data-bakery/
 	buildMCMeta
 	echo "Zipping up $target/$buildType"
-	zip -r ../baked-packs/$target-$buildType.zip data-bakery/*
+	cd data-bakery
+	zip -r ../baked-packs/$target-$buildType.zip *
+	cd ..
 }
         # Setup build env
     if [ ! -f ".firstrun" ]; then
