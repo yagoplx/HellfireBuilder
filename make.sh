@@ -74,7 +74,7 @@ cp -r src ../AstralSorcery/
 rm -rf ../AstralSorcery/src/generated
 rm -rf ../AstralSorcery/src/test
 echo "Packaging Astral Sorcery to test env"
-cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../mc-live/mods/ || echo "mc-live should point to your mods folder. Make a symlink!"
+cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../mc-live/ || echo "mc-live should point to your mods folder. Make a symlink!"
 echo "Packaging Astral Sorcery to baked-jars folder"
 cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../baked-jars/
 echo "Astral Sorcery is ready."
