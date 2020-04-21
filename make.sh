@@ -29,7 +29,8 @@ setup(){
     echo ""
     echo "All done!"
     echo "Run \"./make.sh all\" to build both Astral Sorcery and ObserverLib."
-    echo "Run \"./make.sh for help.\""
+    echo "Run \"./make.sh\" for help."
+    echo "Run \"./make.sh\" --build-data before building the mods or you'll end up with recipes missing."
     echo "Optional: make a symlink called \"mc-live\" in this folder to your .minecraft/mods folder,"
     echo "          this allows the script to place the new jars directly in there."
     echo "Regardless, new valid jars will be placed on the baked-jars folder."
@@ -37,6 +38,11 @@ setup(){
     exit 0
       }
 
+buildData(){
+	echo "Running data generators..."
+	./gradlew prepareRunData
+	./gradlew runData
+}
         # Setup build env
     if [ ! -f ".firstrun" ]; then
        setup;
@@ -49,11 +55,19 @@ case $1 in
 	*) echo "Nothing to do. Valid options: as, ol, all" ;; 
 esac
 
+case $@ in
+	*--build-data*) buildData="true" ;;
+	*) true ;;
+esac
+
     if [ "$makeAS" == "true" ]; then
 echo "Making Astral Sorcery"
 cp -rv gradle/* MirrorAstralSorcery
 cd MirrorAstralSorcery
 ./gradlew build
+	if [ "$buildData" == "true" ]; then
+		buildData;
+	fi
 echo "Syncing src to git"
 cp -r src ../AstralSorcery/
 echo "Packaging Astral Sorcery to test env"
@@ -69,6 +83,9 @@ echo "Making ObserverLib"
 cp -rv gradle/* MirrorObserverLib
 cd MirrorObserverLib
 ./gradlew build
+	if [ "$buildData" == "true" ]; then
+		buildData;
+	fi
 echo "Syncing src to git"
 cp -r src ../ObserverLib/
 echo "Packaging ObserverLib to test env" 
@@ -81,4 +98,5 @@ cd ..
 
 unset makeOL
 unset makeAS
+unset buildData
 exit 0
