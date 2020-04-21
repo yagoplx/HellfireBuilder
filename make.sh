@@ -52,7 +52,8 @@ case $1 in
 	as) makeAS="true" ;;
 	ol) makeOL="true" ;;
 	all) makeAS="true"; makeOL="true" ;;
-	*) echo "Nothing to do. Valid options: as, ol, all" ;; 
+	*) echo "HellfireBuilder/make.sh, usage: ./make.sh (TARGET) [OPTIONS]";
+	echo "Nothing to do. Valid targets: as, ol, all; Valid options: --build-data" ;; 
 esac
 
 case $@ in
