@@ -14,6 +14,7 @@ setup(){
     echo "OK. You'll still have to manually pull updates yourself."
     echo "Setting up build environment... (this can take a while)"
     mkdir baked-jars 2>/dev/null
+    mkdir baked-data 2>/dev/null
     mkdir MirrorAstralSorcery 2>/dev/null
     mkdir MirrorObserverLib 2>/dev/null
     cd AstralSorcery
@@ -38,10 +39,45 @@ setup(){
     exit 0
       }
 
+buildMCMeta(){
+	if [ "buildType" == "datapack" ]; then
+		echo "{" > pack.mcmeta
+  	 	echo "\"pack\": {" >> data-bakery/pack.mcmeta
+    	  	echo "\"pack_format\": 5," >> data-bakery/pack.mcmeta
+    	  	echo "\"description\": \"$target Mod Data Pack\"" >> data-bakery/pack.mcmeta
+  	 	echo "  }" >> data-bakery/pack.mcmeta
+		echo "}" >> data-bakery/pack.mcmeta
+	elif [ "buildType" == "resourcepack" ]; then
+		echo "{" > pack.mcmeta
+  	 	echo "\"pack\": {" >> data-bakery/pack.mcmeta
+    	  	echo "\"pack_format\": 5," >> data-bakery/pack.mcmeta
+    	  	echo "\"description\": \"$target Mod Resource Pack\"" >> data-bakery/pack.mcmeta
+  	 	echo "  }" >> data-bakery/pack.mcmeta
+		echo "}" >> data-bakery/pack.mcmeta
+	fi
+	echo "Made mcmeta for $target/$buildType"
+}
+
 buildData(){
 	echo "Running data generators..."
+	mkdir data-bakery 2>/dev/null
 	./gradlew prepareRunData
 	./gradlew runData
+	echo "Packaging assets into baked-packs..."
+	buildType="resourcepack"
+	cp -r src/generated/resources/assets data-bakery/
+	buildMCMeta
+	echo "Zipping up $target/$buildType"
+	zip -r ../baked-data/$target-$buildType.zip data-bakery/*
+	
+	rm -rf data-bakery/*
+	
+	echo "Packaging data into baked-packs..."
+	buildType="datapack"
+	cp -r src/generated/resources/data data-bakery/
+	buildMCMeta
+	echo "Zipping up $target/$buildType"
+	zip -r ../baked-data/$target-$buildType.zip data-bakery/*
 }
         # Setup build env
     if [ ! -f ".firstrun" ]; then
@@ -63,6 +99,7 @@ esac
 
     if [ "$makeAS" == "true" ]; then
 echo "Making Astral Sorcery"
+target="AstralSorcery"
 cp -rv gradle/* MirrorAstralSorcery
 cd MirrorAstralSorcery
 ./gradlew build
@@ -78,11 +115,18 @@ cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../mc-li
 echo "Packaging Astral Sorcery to baked-jars folder"
 cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../baked-jars/
 echo "Astral Sorcery is ready."
+	if [ "$buildData" == "true" ]; then
+		echo "Generated the mod's datapack in the folder baked-packs."
+		echo "Put it in your world's datapacks folder to have additional functionality."
+		echo "Generated the mod's resource pack in the folder baked-packs."
+		echo "Put it in your resource packs folder so that custom blocks have models."
+	fi
 cd ..
     fi
 
     if [ "$makeOL" == "true" ]; then
 echo "Making ObserverLib"
+target="ObserverLib"
 cp -rv gradle/* MirrorObserverLib
 cd MirrorObserverLib
 ./gradlew build
@@ -98,6 +142,12 @@ cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../mc-li
 echo "Packaging ObserverLib to baked-jars folder"
 cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../baked-jars/
 echo "ObserverLib is ready."
+	if [ "$buildData" == "true" ]; then
+		echo "Generated the mod's datapack in the folder baked-packs."
+		echo "Put it in your world's datapacks folder to have additional functionality."
+		echo "Generated the mod's resource pack in the folder baked-packs."
+		echo "Put it in your resource packs folder so that custom blocks have models."
+	fi
 cd ..
     fi
 
