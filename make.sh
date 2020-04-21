@@ -14,7 +14,7 @@ setup(){
     echo "OK. You'll still have to manually pull updates yourself."
     echo "Setting up build environment... (this can take a while)"
     mkdir baked-jars 2>/dev/null
-    mkdir baked-data 2>/dev/null
+    mkdir baked-packs 2>/dev/null
     mkdir MirrorAstralSorcery 2>/dev/null
     mkdir MirrorObserverLib 2>/dev/null
     cd AstralSorcery
@@ -68,7 +68,7 @@ buildData(){
 	cp -r src/generated/resources/assets data-bakery/
 	buildMCMeta
 	echo "Zipping up $target/$buildType"
-	zip -r ../baked-data/$target-$buildType.zip data-bakery/*
+	zip -r ../baked-packs/$target-$buildType.zip data-bakery/*
 	
 	rm -rf data-bakery/*
 	
@@ -77,7 +77,7 @@ buildData(){
 	cp -r src/generated/resources/data data-bakery/
 	buildMCMeta
 	echo "Zipping up $target/$buildType"
-	zip -r ../baked-data/$target-$buildType.zip data-bakery/*
+	zip -r ../baked-packs/$target-$buildType.zip data-bakery/*
 }
         # Setup build env
     if [ ! -f ".firstrun" ]; then
