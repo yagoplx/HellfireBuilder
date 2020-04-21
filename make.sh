@@ -71,6 +71,8 @@ cd MirrorAstralSorcery
 	fi
 echo "Syncing src to git"
 cp -r src ../AstralSorcery/
+rm -rf ../AstralSorcery/src/generated
+rm -rf ../AstralSorcery/src/test
 echo "Packaging Astral Sorcery to test env"
 cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../mc-live/mods/ || echo "mc-live should point to your mods folder. Make a symlink!"
 echo "Packaging Astral Sorcery to baked-jars folder"
@@ -89,6 +91,8 @@ cd MirrorObserverLib
 	fi
 echo "Syncing src to git"
 cp -r src ../ObserverLib/
+rm -rf ../ObserverLib/src/generated
+rm -rf ../ObserverLib/src/test
 echo "Packaging ObserverLib to test env" 
 cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../mc-live/mods/ || echo "mc-live should point to your mods folder. Make a symlink!"
 echo "Packaging ObserverLib to baked-jars folder"
