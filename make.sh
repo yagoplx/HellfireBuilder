@@ -2,7 +2,6 @@
 # AS-1.14.4/ObserverLib portable developer environment
 # Complies with HellFirePvP's LICENSE.
 set -a
-nogen="false"
 
 setup(){
     echo "AS-1.14.4/ObserverLib portable developer environment"
@@ -63,10 +62,8 @@ buildMCMeta(){
 buildData(){
 	echo "Running data generators..."
 	mkdir data-bakery 2>/dev/null
-	if [ "$nogen" != "false" ]; then
 	./gradlew prepareRunData
 	./gradlew runData
-	fi
 	echo "Packaging assets into baked-packs..."
 	buildType="resourcepack"
 	cp -r src/generated/resources/assets data-bakery/
