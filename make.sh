@@ -28,7 +28,7 @@ setup(){
       }
 
         # Setup build env
-    if [ ! -f ".firstrun"]; then
+    if [ ! -f ".firstrun" ]; then
        setup;
     fi
 
