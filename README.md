@@ -7,6 +7,8 @@ The debug-ready mod jar will be served warm to you (or Minecraft).
 Plus, the changes will be placed in the git repo src folder, for commiting and pushing changes. This is most useful if you replace the repos with your own fork, to later make a PR.
 
 **Installation**  
+Clone the repo. `git clone https://github.com/yagoplx/HellfireBuilder.git; cd HellfireBuilder/`
+  
 Run `./make.sh`, for initial setup.  
 
 **Usage**  
