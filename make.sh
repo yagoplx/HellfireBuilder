@@ -8,6 +8,7 @@ setup(){
     echo "Grabbing code from upstream..."
     git clone https://github.com/HellFirePvP/AstralSorcery.git
     git clone https://github.com/HellFirePvP/ObserverLib.git
+    echo ""
     echo "OK. You'll still have to manually pull updates yourself."
     echo "Setting up build environment... (this can take a while)"
     mkdir baked-jars 2>/dev/null
@@ -17,6 +18,7 @@ setup(){
     cp -r ObserverLib/* MirrorObserverLib/
     cp -r gradle/* MirrorAstralSorcery/
     cp -r gradle/* MirrorObserverLib/
+    echo ""
     echo "All done!"
     echo "Run \"./make.sh all\" to build both Astral Sorcery and ObserverLib."
     echo "Run \"./make.sh for help.\""
