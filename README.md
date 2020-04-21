@@ -1,5 +1,5 @@
 # HellfireBuilder
-A portable script for building HellFirePvP's mods to assist in debugging and development. For \*nix OSes only!
+A portable script for building HellFirePvP's mods to assist in debugging and development. For \*nix OSes only!  
 This requires the Java 8 JDK to be installed, along with git.
 
 It setups an environment that facilitiates development of Astral Sorcery and ObserverLib.
