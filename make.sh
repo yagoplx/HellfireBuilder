@@ -5,7 +5,9 @@
 setup(){
     echo "AS-1.14.4/ObserverLib portable developer environment"
     echo "Complies with HellFirePvP's LICENSE."
+    git help >/dev/null || echo "WARN: This script requires git!"
     echo "Grabbing code from upstream..."
+    
     git clone https://github.com/HellFirePvP/AstralSorcery.git
     git clone https://github.com/HellFirePvP/ObserverLib.git
     echo ""
@@ -14,6 +16,12 @@ setup(){
     mkdir baked-jars 2>/dev/null
     mkdir MirrorAstralSorcery 2>/dev/null
     mkdir MirrorObserverLib 2>/dev/null
+    cd AstralSorcery
+    git checkout 1.14.3-indev
+    cd ..
+    cd ObserverLib
+    git checkout 1.14.3-indev
+    cd ..
     cp -r AstralSorcery/* MirrorAstralSorcery/
     cp -r ObserverLib/* MirrorObserverLib/
     cp -r gradle/* MirrorAstralSorcery/
