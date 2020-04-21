@@ -1,6 +1,7 @@
 #!/bin/bash
 # AS-1.14.4/ObserverLib portable developer environment
 # Complies with HellFirePvP's LICENSE.
+set -a
 nogen="false"
 
 setup(){
