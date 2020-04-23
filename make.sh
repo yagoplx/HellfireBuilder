@@ -126,7 +126,7 @@ case $1 in
 	all) makeAS="true"; makeOL="true" ;;
 	update) updateSources; exit 0 ;;
 	*) echo "HellfireBuilder/make.sh, usage: ./make.sh (TARGET) [OPTIONS]";
-	echo "Nothing to do. Valid targets: as, ol, all; Valid options: --build-data, --build-data-in-packs" ;; 
+	echo "Nothing to do. Valid targets: update, as, ol, all; Valid options: --build-data, --build-data-in-packs" ;; 
 esac
 
 case $@ in
