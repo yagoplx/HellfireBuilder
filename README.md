@@ -17,6 +17,7 @@ Run `./make.sh`, for initial setup.
 Run `./make.sh as` to build Astral Sorcery.  
 Run `./make.sh ol` to build ObserverLib.  
 Run `./make.sh all` to build both.  
+Run `./make.sh update` to update HellfireBuilder and the mods.
 Add the `--build-data` flag to your command to build recipes and block state data.  
 Add the `--build-data-in-packs` flag to your command to do the above in the "vanilla" way.
 
