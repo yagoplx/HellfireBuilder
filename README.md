@@ -18,10 +18,11 @@ Run `./make.sh as` to build Astral Sorcery.
 Run `./make.sh ol` to build ObserverLib.  
 Run `./make.sh all` to build both.  
 Add the `--build-data` flag to your command to build recipes and block state data.
+Add the `--build-data-in-packs` flag to your command to do the above in the "vanilla" way.
 
 **FAQ**  
 Q: Help, my recipes and textures are missing!  
-A: --build-data will generate the recipes and textures you need. You just need to put the files that appear in the baked-packs folder in your resourcepacks folder, for the resource pack, and the datapack in your world's datapacks folder.
+A: --build-data will generate the recipes and textures you need, and automatically include them into the jar.
 
 **Special Thanks/Credits**  
 https://github.com/HellFirePvP for making awesome mods.  
