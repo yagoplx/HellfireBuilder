@@ -40,6 +40,24 @@ setup(){
     exit 0
       }
 
+updateSources(){
+	echo "Starting update for AstralSorcery"
+	cd AstralSorcery
+	git pull origin
+	echo "Copying changes to mirror"
+	cp -r * ../MirrorAstralSorcery/
+	cd ..
+	echo "Starting update for ObserverLib"
+	cd ObserverLib
+	git pull origin
+	echo "Copying changes to mirror"
+	cp -r * ../MirrorObserverLib/
+	cd ..
+	echo "Starting update for HellfireBuilder"
+	git pull origin
+	echo "All good!"
+}
+
 buildMCMeta(){
 	if [ "$buildType" == "datapack" ]; then
 		echo "{" > data-bakery/pack.mcmeta
@@ -68,7 +86,7 @@ buildData(){
 	echo "Checking if Minecraft data generator instance is installed..."
 	./gradlew prepareRunData
 	echo "Running Minecraft data generator instance..."
-	./gradlew runData
+	./gradlew runData 2>/dev/null
 		if [ "$buildDataMethod" == "packs" ]; then
 		echo "Packaging assets into baked-packs..."
 		buildType="resourcepack"
@@ -106,6 +124,7 @@ case $1 in
 	as) makeAS="true" ;;
 	ol) makeOL="true" ;;
 	all) makeAS="true"; makeOL="true" ;;
+	update) updateSources; exit 0 ;;
 	*) echo "HellfireBuilder/make.sh, usage: ./make.sh (TARGET) [OPTIONS]";
 	echo "Nothing to do. Valid targets: as, ol, all; Valid options: --build-data, --build-data-in-packs" ;; 
 esac
