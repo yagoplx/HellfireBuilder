@@ -62,25 +62,40 @@ buildMCMeta(){
 buildData(){
 	echo "Running data generators..."
 	mkdir data-bakery 2>/dev/null
+	echo "This will cause Minecraft to pop up for a while"
+	echo "It will exit and pop out an error message. This is fine."
+	sleep 1.5
+	echo "Checking if Minecraft data generator instance is installed..."
 	./gradlew prepareRunData
+	echo "Running Minecraft data generator instance..."
 	./gradlew runData
-	echo "Packaging assets into baked-packs..."
-	buildType="resourcepack"
-	cp -r src/generated/resources/assets data-bakery/
-	buildMCMeta
-	echo "Zipping up $target/$buildType"
-	cd data-bakery
-	zip -rqDm ../../baked-packs/$target-$buildType.zip *
-	cd ..
+		if [ "$buildDataMethod" == "packs" ]; then
+		echo "Packaging assets into baked-packs..."
+		buildType="resourcepack"
+		cp -r src/generated/resources/assets data-bakery/
+		buildMCMeta
+		echo "Zipping up $target/$buildType"
+		cd data-bakery
+		zip -rqDm ../../baked-packs/$target-$buildType.zip *
+		cd ..
 	
-	echo "Packaging data into baked-packs..."
-	buildType="datapack"
-	cp -r src/generated/resources/data data-bakery/
-	buildMCMeta
-	echo "Zipping up $target/$buildType"
-	cd data-bakery
-	zip -rqDm ../../baked-packs/$target-$buildType.zip *
-	cd ..
+		echo "Packaging data into baked-packs..."
+		buildType="datapack"
+		cp -r src/generated/resources/data data-bakery/
+		buildMCMeta
+		echo "Zipping up $target/$buildType"
+		cd data-bakery
+		zip -rqDm ../../baked-packs/$target-$buildType.zip *
+		cd ..
+		else
+		echo "Packaging assets into jar source."
+		cp -r src/generated/resources/assets/* src/main/resources/assets/
+		echo "Packaging data into jar source."
+		cp -r src/generated/resources/data  src/main/resources/
+		echo "Rebuilding jar with assets/data builtin..."
+		./gradlew build
+		fi
+	
 }
         # Setup build env
     if [ ! -f ".firstrun" ]; then
@@ -92,11 +107,12 @@ case $1 in
 	ol) makeOL="true" ;;
 	all) makeAS="true"; makeOL="true" ;;
 	*) echo "HellfireBuilder/make.sh, usage: ./make.sh (TARGET) [OPTIONS]";
-	echo "Nothing to do. Valid targets: as, ol, all; Valid options: --build-data" ;; 
+	echo "Nothing to do. Valid targets: as, ol, all; Valid options: --build-data, --build-data-in-packs" ;; 
 esac
 
 case $@ in
-	*--build-data*) buildData="true" ;;
+	*--build-data*) buildData="true"; buildDataMethod="internal" ;;
+	*--build-data-in-packs*) buildData="true"; buildDataMethod="packs" ;;
 	*) true ;;
 esac
 
@@ -111,18 +127,29 @@ cd MirrorAstralSorcery
 	fi
 echo "Syncing src to git"
 cp -r src ../AstralSorcery/
-rm -rf ../AstralSorcery/src/generated
-rm -rf ../AstralSorcery/src/test
+# Clean up things to conform with hellfire's branch
+echo "Cleaning up tree"
+rm -rf ../AstralSorcery/src/generated 2>/dev/null
+rm -rf ../AstralSorcery/src/test 2>/dev/null
+rm -rf ../AstralSorcery/src/main/resources/assets/astralsorcery/blockstates 2>/dev/null
+rm -rf ../AstralSorcery/src/main/resources/data 2>/dev/null
+
 echo "Packaging Astral Sorcery to test env"
 cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../mc-live/ || echo "mc-live should point to your mods folder. Make a symlink!"
 echo "Packaging Astral Sorcery to baked-jars folder"
 cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../baked-jars/
-echo "Astral Sorcery is ready."
 	if [ "$buildData" == "true" ]; then
+		if [ "$buildDataMethod" == "packs" ]; then
+		echo "Astral Sorcery is ready."
 		echo "Generated the mod's datapack in the folder baked-packs."
 		echo "Put it in your world's datapacks folder to have additional functionality."
 		echo "Generated the mod's resource pack in the folder baked-packs."
 		echo "Put it in your resource packs folder so that custom blocks have models."
+		else
+		echo "Astral Sorcery is ready, generated assets/data builtin."
+		fi
+	else
+	echo "Astral Sorcery is ready."
 	fi
 cd ..
     fi
@@ -138,18 +165,27 @@ cd MirrorObserverLib
 	fi
 echo "Syncing src to git"
 cp -r src ../ObserverLib/
-rm -rf ../ObserverLib/src/generated
-rm -rf ../ObserverLib/src/test
+echo "Cleaning up tree"
+rm -rf ../ObserverLib/src/generated 2>/dev/null
+rm -rf ../ObserverLib/src/test 2>/dev/null
+rm -rf ../ObserverLib/src/main/resources/data 2>/dev/null
+
 echo "Packaging ObserverLib to test env" 
 cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../mc-live/mods/ || echo "mc-live should point to your mods folder. Make a symlink!"
 echo "Packaging ObserverLib to baked-jars folder"
 cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../baked-jars/
-echo "ObserverLib is ready."
 	if [ "$buildData" == "true" ]; then
+		if [ "$buildDataMethod" == "packs" ]; then
+		echo "ObserverLib is ready."
 		echo "Generated the mod's datapack in the folder baked-packs."
 		echo "Put it in your world's datapacks folder to have additional functionality."
 		echo "Generated the mod's resource pack in the folder baked-packs."
 		echo "Put it in your resource packs folder so that custom blocks have models."
+		else
+		echo "ObserverLib is ready, generated assets/data builtin."
+		fi
+	else
+	echo "ObserverLib is ready."
 	fi
 cd ..
     fi
@@ -157,4 +193,5 @@ cd ..
 unset makeOL
 unset makeAS
 unset buildData
+unset buildDataMethod
 exit 0
