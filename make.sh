@@ -190,6 +190,8 @@ cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../baked
 cd ..
     fi
 
+./gradlew stop
+
 unset makeOL
 unset makeAS
 unset buildData
