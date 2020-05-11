@@ -18,12 +18,29 @@ setup(){
     mkdir baked-packs 2>/dev/null
     mkdir MirrorAstralSorcery 2>/dev/null
     mkdir MirrorObserverLib 2>/dev/null
+    
+    echo "Please select a mode (number) from the options below:"
+    echo "1 - Sources for 1.14.4"
+    echo "2 - Sources for 1.12.2"
+    echo "When done, press Enter. To use another mode, you will need to install another instance of HellfireBuilder."
+    read i
+    
+    if [ "$i" == "1" ]; then
+    echo "Switching branch: 1.14.4"
     cd AstralSorcery
     git checkout 1.14.3-indev
     cd ..
     cd ObserverLib
     git checkout 1.14.3-indev
     cd ..
+    elif [ "$i" == "2" ]; then
+    echo "Not switching branch: 1.12.2"
+    else
+    echo "Error, invalid option. Quitting."
+    rm .firstrun
+    exit 1
+    fi
+    
     cp -r AstralSorcery/* MirrorAstralSorcery/
     cp -r ObserverLib/* MirrorObserverLib/
     cp -r gradle/* MirrorAstralSorcery/
