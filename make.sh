@@ -28,9 +28,11 @@ setup(){
     if [ "$i" == "1" ]; then
     echo "Switching branch: 1.14.4"
     cd AstralSorcery
+    git branch 1.14.3-indev 2>/dev/null
     git checkout 1.14.3-indev
     cd ..
     cd ObserverLib
+    git branch 1.14.3-indev 2>/dev/null
     git checkout 1.14.3-indev
     cd ..
     elif [ "$i" == "2" ]; then
