@@ -77,7 +77,7 @@ updateSources(){
 	cp -r * ../MirrorObserverLib/
 	cd ..
 	echo "Starting update for HellfireBuilder"
-	git pull origin
+	git pull origin master
 	echo "All good!"
 }
 
