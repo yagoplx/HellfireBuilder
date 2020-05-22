@@ -233,9 +233,10 @@ cd ..
     fi
 
 case $1 in
-	as) ./gradlew --stop ;;
-	ol) ./gradlew --stop ;;
-	all) ./gradlew --stop ;;
+	as) cd MirrorAstralSorcery; ./gradlew --stop ; cd .. ;;
+	ol) cd MirrorObserverLib; ./gradlew --stop ; cd .. ;;
+	all) cd MirrorObserverLib; ./gradlew --stop ; cd ..;
+	     cd MirrorAstralSorcery; ./gradlew --stop ; cd .. ;;
 esac
 
 unset makeOL
