@@ -193,7 +193,6 @@ cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../baked
 	else
 	echo "Astral Sorcery is ready."
 	fi
-	./gradlew --stop
 cd ..
     fi
 
@@ -230,9 +229,14 @@ cp -rv build/libs/$(ls build/libs/ | grep -vi deobf | grep -vi sources) ../baked
 	else
 	echo "ObserverLib is ready."
 	fi
-	./gradlew --stop
 cd ..
     fi
+
+case $1 in
+	as) ./gradlew --stop ;;
+	ol) ./gradlew --stop ;;
+	all) ./gradlew --stop ;;
+esac
 
 unset makeOL
 unset makeAS
