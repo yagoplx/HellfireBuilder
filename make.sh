@@ -27,6 +27,7 @@ setup(){
     
     if [ "$i" == "1" ]; then
     echo "Switching branch: 1.14.4"
+    echo "1.14.3-indev" > .branch
     cd AstralSorcery
     git branch 1.14.3-indev 2>/dev/null
     git checkout 1.14.3-indev
@@ -37,6 +38,7 @@ setup(){
     cd ..
     elif [ "$i" == "2" ]; then
     echo "Not switching branch: 1.12.2"
+    echo "master" > .branch
     else
     echo "Error, invalid option. Quitting."
     rm .firstrun
@@ -60,15 +62,17 @@ setup(){
       }
 
 updateSources(){
-	echo "Starting update for AstralSorcery"
+	touch .branch
+	branch=$(cat .branch)
+	echo "Starting update for AstralSorcery for branch $branch"
 	cd AstralSorcery
-	git pull origin
+	git pull origin $branch || git pull origin
 	echo "Copying changes to mirror"
 	cp -r * ../MirrorAstralSorcery/
 	cd ..
 	echo "Starting update for ObserverLib"
 	cd ObserverLib
-	git pull origin
+	git pull origin $branch || git pull origin
 	echo "Copying changes to mirror"
 	cp -r * ../MirrorObserverLib/
 	cd ..
