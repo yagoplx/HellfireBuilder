@@ -1,10 +1,9 @@
 #!/bin/bash
-# AS-1.14.4/ObserverLib portable developer environment
 # Complies with HellFirePvP's LICENSE.
 set -a
 
 setup(){
-    echo "AS-1.14.4/ObserverLib portable developer environment"
+    echo "AS/ObserverLib portable developer environment"
     echo "Complies with HellFirePvP's LICENSE."
     git help >/dev/null || echo "WARN: This script requires git!"
     echo "Grabbing code from upstream..."
@@ -20,24 +19,24 @@ setup(){
     mkdir MirrorObserverLib 2>/dev/null
     
     echo "Please select a mode (number) from the options below:"
-    echo "1 - Sources for 1.14.4"
+    echo "1 - Sources for Master"
     echo "2 - Sources for 1.12.2"
     echo "When done, press Enter. To use another mode, you will need to install another instance of HellfireBuilder."
     read i
     
     if [ "$i" == "1" ]; then
-    echo "Switching branch: 1.14.4"
-    echo "1.14.3-indev" > .branch
+    echo "Switching branch: Master"
+    echo "master" > .branch
     cd AstralSorcery
-    git branch 1.14.3-indev 2>/dev/null
-    git checkout 1.14.3-indev
+    git branch master 2>/dev/null
+    git checkout master
     cd ..
     cd ObserverLib
-    git branch 1.14.3-indev 2>/dev/null
-    git checkout 1.14.3-indev
+    git branch master 2>/dev/null
+    git checkout master
     cd ..
     elif [ "$i" == "2" ]; then
-    echo "Not switching branch: 1.12.2"
+    echo "Not switching branch: master"
     echo "master" > .branch
     else
     echo "Error, invalid option. Quitting."
